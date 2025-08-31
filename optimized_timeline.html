@@ -8,11 +8,13 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
   <link href="navigation.css" rel="stylesheet">
+  <link href="global_styles.css" rel="stylesheet">
   <style>
     .slide-container {
       width: 100%;
       max-width: 1280px;
-      min-height: 720px;
+      min-height: 100vh;
+      height: 100vh;
       background: #F6F9FC;
       font-family: 'Inter', 'Roboto', sans-serif;
       color: #333333;
@@ -20,6 +22,8 @@
       flex-direction: column;
       padding: clamp(20px, 4vw, 40px);
       margin: 0 auto;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .header {
       display: flex;
@@ -111,7 +115,9 @@
     @media (max-width: 768px) {
       .slide-container {
         min-height: 100vh;
+        height: 100vh;
         padding: 20px 15px;
+        overflow: hidden;
       }
       .header {
         justify-content: center;

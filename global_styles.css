@@ -1,0 +1,42 @@
+/* Global styles for consistent page heights */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  color: #333333;
+  background: #F6F9FC;
+}
+
+/* Ensure all slide containers have consistent height */
+.slide-container {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 4vw, 40px);
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .slide-container {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 20px 15px;
+    overflow: hidden;
+  }
+}
+
+/* Prevent any unwanted scrolling */
+* {
+  box-sizing: border-box;
+}
