@@ -783,6 +783,39 @@
       }
     });
   </script>
+
+  <script>
+    // Add hover effects for navigation buttons
+    document.addEventListener('DOMContentLoaded', function() {
+      const navButtons = document.querySelectorAll('.nav-button');
+      
+      navButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          if (this.classList.contains('prev')) {
+            this.style.backgroundColor = '#9ca3af';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(169, 174, 184, 0.4)';
+          } else {
+            this.style.backgroundColor = '#5a67d8';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(103, 114, 229, 0.4)';
+          }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+          if (this.classList.contains('prev')) {
+            this.style.backgroundColor = '#A9AEB8';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(169, 174, 184, 0.3)';
+          } else {
+            this.style.backgroundColor = '#6772E5';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(103, 114, 229, 0.3)';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 

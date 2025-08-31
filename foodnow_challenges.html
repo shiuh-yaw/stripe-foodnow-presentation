@@ -185,11 +185,44 @@
         <img src="presentation_images/food_delivery_app.jpeg" alt="Food Delivery App Interface" class="challenges-image">
       </div>
     </div>
-    <div class="navigation-buttons">
-      <a href="title_slide.html" class="nav-button prev">Previous</a>
-      <a href="stripe_value_proposition.html" class="nav-button next">Next</a>
+    <div class="navigation-buttons" style="position: absolute; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000;">
+      <a href="title_slide.html" class="nav-button prev" style="padding: 12px 24px; background-color: #A9AEB8; color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(169, 174, 184, 0.3); display: inline-block; text-align: center; min-width: 100px; line-height: 1.5;">Previous</a>
+      <a href="stripe_value_proposition.html" class="nav-button next" style="padding: 12px 24px; background-color: #6772E5; color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(103, 114, 229, 0.3); display: inline-block; text-align: center; min-width: 100px; line-height: 1.5;">Next</a>
     </div>
   </div>
+  
+  <script>
+    // Add hover effects for navigation buttons
+    document.addEventListener('DOMContentLoaded', function() {
+      const navButtons = document.querySelectorAll('.nav-button');
+      
+      navButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          if (this.classList.contains('prev')) {
+            this.style.backgroundColor = '#9ca3af';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(169, 174, 184, 0.4)';
+          } else {
+            this.style.backgroundColor = '#5a67d8';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(103, 114, 229, 0.4)';
+          }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+          if (this.classList.contains('prev')) {
+            this.style.backgroundColor = '#A9AEB8';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(169, 174, 184, 0.3)';
+          } else {
+            this.style.backgroundColor = '#6772E5';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(103, 114, 229, 0.3)';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 
