@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(20px, 4vw, 30px);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1;
+      padding-right: clamp(10px, 2vw, 30px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .right-column {
+      flex: 1.2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .expansion-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .market-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(15px, 3vw, 25px);
+      background-color: white;
+      padding: clamp(10px, 2vw, 15px);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    .market-icon {
+      width: clamp(40px, 7vw, 50px);
+      height: clamp(40px, 7vw, 50px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 20px);
+      flex-shrink: 0;
+    }
+    .market-text {
+      font-size: clamp(16px, 3.5vw, 20px);
+      font-weight: 600;
+    }
+    .market-description {
+      font-size: clamp(12px, 2.5vw, 16px);
+      color: #666666;
+      margin-top: clamp(2px, 0.5vw, 5px);
+    }
+    .highlight {
+      color: #FF5722;
+      font-weight: 600;
+    }
+    .intro-text {
+      font-size: clamp(14px, 2.8vw, 18px);
+      line-height: 1.6;
+      margin-bottom: clamp(15px, 3vw, 25px);
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-column {
+        width: 100%;
+      }
+      .market-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .market-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Supporting International Expansion</h1>
+      <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <p class="intro-text">
+          Stripe enables FoodNow to <span class="highlight">expand seamlessly into 5 new markets</span> with localized payment experiences and unified reporting.
+        </p>
+        
+        <div class="market-item">
+          <div class="market-icon">
+            <i class="fas fa-credit-card fa-lg"></i>
+          </div>
+          <div>
+            <div class="market-text">Local Payment Methods</div>
+            <div class="market-description">Support for region-specific payment methods like SEPA in Europe, Boleto in Brazil, and Alipay in Asia</div>
+          </div>
+        </div>
+        
+        <div class="market-item">
+          <div class="market-icon" style="background-color: #FF5722;">
+            <i class="fas fa-money-bill-wave fa-lg"></i>
+          </div>
+          <div>
+            <div class="market-text">Multi-Currency Support</div>
+            <div class="market-description">Process payments in 135+ currencies with automatic conversion and settlement in your preferred currency</div>
+          </div>
+        </div>
+        
+        <div class="market-item">
+          <div class="market-icon">
+            <i class="fas fa-shield-alt fa-lg"></i>
+          </div>
+          <div>
+            <div class="market-text">Regional Compliance</div>
+            <div class="market-description">Built-in compliance with local regulations including PSD2 in Europe and data localization requirements</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <img src="presentation_images/international_expansion_updated.png" alt="Global Payment Methods and Currencies" class="expansion-image">
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="stakeholder_benefits.html" class="nav-button prev">Previous</a>
+      <a href="innovation_opportunities.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

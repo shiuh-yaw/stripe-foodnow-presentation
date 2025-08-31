@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(15px, 3vw, 30px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1;
+      padding-right: clamp(10px, 2vw, 30px);
+    }
+    .right-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .innovation {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(15px, 3vw, 25px);
+    }
+    .icon {
+      width: clamp(40px, 7vw, 50px);
+      height: clamp(40px, 7vw, 50px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 20px);
+      flex-shrink: 0;
+    }
+    .innovation-text {
+      font-size: clamp(16px, 3.5vw, 20px);
+      font-weight: 600;
+    }
+    .innovation-description {
+      font-size: clamp(12px, 2.5vw, 16px);
+      color: #666666;
+      margin-top: clamp(2px, 0.5vw, 5px);
+    }
+    .innovation-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      margin-bottom: clamp(15px, 3vw, 25px);
+    }
+    .highlight-box {
+      background-color: #FFFFFF;
+      border-left: 4px solid #FF5722;
+      padding: clamp(15px, 3vw, 20px);
+      margin-top: clamp(15px, 3vw, 30px);
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    .highlight-title {
+      font-weight: 600;
+      font-size: clamp(14px, 2.8vw, 18px);
+      color: #FF5722;
+      margin-bottom: clamp(5px, 1vw, 10px);
+    }
+    .highlight-content {
+      font-size: clamp(12px, 2.5vw, 16px);
+      color: #555555;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-column {
+        width: 100%;
+      }
+      .innovation {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      .highlight-box {
+        margin-top: clamp(10px, 2vw, 20px);
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Innovation Opportunities</h1>
+      <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <div class="innovation">
+          <div class="icon">
+            <i class="fas fa-calendar-alt fa-lg"></i>
+          </div>
+          <div>
+            <div class="innovation-text">Subscription Meal Plans</div>
+            <div class="innovation-description">Implement recurring billing for weekly/monthly meal subscriptions using Stripe Billing, increasing customer retention and predictable revenue</div>
+          </div>
+        </div>
+        
+        <div class="innovation">
+          <div class="icon">
+            <i class="fas fa-star fa-lg"></i>
+          </div>
+          <div>
+            <div class="innovation-text">Loyalty Program</div>
+            <div class="innovation-description">Create a points-based rewards system with Stripe Checkout and Customer objects to track and reward repeat customers</div>
+          </div>
+        </div>
+        
+        <div class="innovation">
+          <div class="icon" style="background-color: #FF5722;">
+            <i class="fas fa-store fa-lg"></i>
+          </div>
+          <div>
+            <div class="innovation-text">Restaurant Partner Benefits</div>
+            <div class="innovation-description">Offer reduced commission rates for high-volume partners and marketing support through Stripe Connect platform</div>
+          </div>
+        </div>
+        
+        <div class="innovation">
+          <div class="icon" style="background-color: #FF5722;">
+            <i class="fas fa-credit-card fa-lg"></i>
+          </div>
+          <div>
+            <div class="innovation-text">FoodNow Payment Card</div>
+            <div class="innovation-description">Launch branded payment cards using Stripe Issuing, offering cashback on platform purchases and restaurant-specific rewards</div>
+          </div>
+        </div>
+        
+        <div class="highlight-box">
+          <div class="highlight-title">Revenue Impact</div>
+          <div class="highlight-content">Subscription models can increase customer lifetime value by 3-5x while reducing acquisition costs through improved retention rates</div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <img src="presentation_images/innovation_opportunities.png" alt="Innovation Opportunities" class="innovation-image">
+        
+        <div class="highlight-box" style="margin-top: clamp(15px, 3vw, 25px);">
+          <div class="highlight-title">Implementation Timeline</div>
+          <div class="highlight-content">Stripe's modular API approach allows for phased rollout of new features, starting with subscriptions in Q4 2025, followed by loyalty program and payment cards in Q1-Q2 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="international_expansion.html" class="nav-button prev">Previous</a>
+      <a href="conclusion.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

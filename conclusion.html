@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(15px, 3vw, 30px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1;
+      padding-right: clamp(10px, 2vw, 30px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .right-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .next-step {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(15px, 3vw, 25px);
+    }
+    .step-number {
+      width: clamp(30px, 5vw, 40px);
+      height: clamp(30px, 5vw, 40px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 20px);
+      font-weight: bold;
+      font-size: clamp(16px, 3vw, 20px);
+      flex-shrink: 0;
+    }
+    .step-text {
+      font-size: clamp(16px, 3.5vw, 20px);
+      font-weight: 600;
+    }
+    .step-description {
+      font-size: clamp(12px, 2.5vw, 16px);
+      color: #666666;
+      margin-top: clamp(2px, 0.5vw, 5px);
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: clamp(20px, 4vw, 40px);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .partner-logo {
+      height: clamp(60px, 10vw, 100px);
+      margin: 0 clamp(10px, 2vw, 20px);
+    }
+    .summary-box {
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      padding: clamp(15px, 3vw, 25px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: clamp(15px, 3vw, 30px);
+      border-left: 4px solid #FF5722;
+    }
+    .summary-title {
+      font-size: clamp(18px, 3.5vw, 22px);
+      font-weight: 600;
+      color: #FF5722;
+      margin-bottom: clamp(10px, 2vw, 15px);
+    }
+    .summary-text {
+      font-size: clamp(14px, 2.8vw, 16px);
+      line-height: 1.6;
+    }
+    .contact-info {
+      font-size: clamp(14px, 2.8vw, 18px);
+      text-align: center;
+      margin-top: clamp(15px, 3vw, 30px);
+      color: #6772E5;
+    }
+    .contact-name {
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-column {
+        width: 100%;
+      }
+      .next-step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .step-number {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      .partner-logo {
+        margin: 0 10px;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Next Steps</h1>
+      <div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 15px;">
+        <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo" style="margin-right: 0;">
+        <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+      </div>
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <div class="summary-box">
+          <div class="summary-title">Partnership Summary</div>
+          <div class="summary-text">
+            Stripe offers FoodNow a comprehensive payment solution that addresses your current challenges while supporting future growth. Our platform enables international expansion, improves payment acceptance, streamlines partner onboarding, and unlocks new revenue streams through innovative features.
+          </div>
+        </div>
+        
+        <div class="next-step">
+          <div class="step-number">1</div>
+          <div>
+            <div class="step-text">Technical Discovery Workshop</div>
+            <div class="step-description">Deep dive into your current architecture and integration requirements with our solutions engineering team</div>
+          </div>
+        </div>
+        
+        <div class="next-step">
+          <div class="step-number">2</div>
+          <div>
+            <div class="step-text">Integration Planning</div>
+            <div class="step-description">Develop detailed implementation roadmap with timeline, resource requirements, and success metrics</div>
+          </div>
+        </div>
+        
+        <div class="next-step">
+          <div class="step-number">3</div>
+          <div>
+            <div class="step-text">Proof of Concept</div>
+            <div class="step-description">Build a working prototype to validate the solution and demonstrate key functionality</div>
+          </div>
+        </div>
+        
+        <div class="next-step">
+          <div class="step-number">4</div>
+          <div>
+            <div class="step-text">Phased Implementation</div>
+            <div class="step-description">Begin with core payment processing, followed by Connect for partners and Billing for subscriptions</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <div class="logo-container">
+          <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="partner-logo">
+          <i class="fas fa-plus fa-2x" style="color: #6772E5; margin: 0 clamp(10px, 2vw, 20px);"></i>
+          <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="partner-logo">
+        </div>
+        
+        <div style="text-align: center; margin-bottom: clamp(15px, 3vw, 30px);">
+          <div style="font-size: clamp(18px, 3.5vw, 24px); font-weight: bold; margin-bottom: clamp(5px, 1vw, 10px);">Let's build the future of food delivery together</div>
+          <div style="font-size: clamp(14px, 2.8vw, 18px); color: #666666;">Powering growth and innovation with seamless payments</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="innovation_opportunities.html" class="nav-button prev">Previous</a>
+      <a href="title_slide.html" class="nav-button next">Start Over</a>
+    </div>
+  </div>
+</body>
+</html>
+

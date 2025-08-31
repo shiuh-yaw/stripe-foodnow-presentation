@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      max-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(15px, 3vw, 20px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 0.9;
+      padding-right: clamp(10px, 2vw, 20px);
+    }
+    .right-column {
+      flex: 1.1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .stakeholder {
+      margin-bottom: clamp(15px, 3vw, 20px);
+    }
+    .stakeholder-title {
+      font-size: clamp(18px, 3.5vw, 22px);
+      font-weight: 600;
+      color: #FF5722;
+      margin-bottom: clamp(5px, 1vw, 10px);
+      display: flex;
+      align-items: center;
+    }
+    .stakeholder-icon {
+      width: clamp(30px, 5vw, 36px);
+      height: clamp(30px, 5vw, 36px);
+      background-color: #FF5722;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(8px, 1.5vw, 12px);
+      flex-shrink: 0;
+    }
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(4px, 0.8vw, 8px);
+    }
+    .check-icon {
+      color: #6772E5;
+      margin-right: clamp(4px, 0.8vw, 8px);
+      margin-top: clamp(1px, 0.2vw, 3px);
+      flex-shrink: 0;
+    }
+    .benefit-text {
+      font-size: clamp(12px, 2.5vw, 15px);
+    }
+    .benefits-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-column {
+        width: 100%;
+      }
+      .stakeholder-title {
+        justify-content: center;
+        text-align: center;
+      }
+      .stakeholder-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      .benefit-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .check-icon {
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Benefits for Key Stakeholders</h1>
+      <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <div class="stakeholder">
+          <div class="stakeholder-title">
+            <div class="stakeholder-icon">
+              <i class="fas fa-money-bill-wave fa-lg"></i>
+            </div>
+            Payments Team
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Improved operational efficiency through automated reconciliation and consolidated reporting</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Reduced fraud with Radar's machine learning and real-time risk assessment</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Higher acceptance rates via Smart Retries and Adaptive Acceptance</span>
+          </div>
+        </div>
+        
+        <div class="stakeholder">
+          <div class="stakeholder-title">
+            <div class="stakeholder-icon" style="background-color: #6772E5;">
+              <i class="fas fa-code fa-lg"></i>
+            </div>
+            Engineering
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Simplified integration with well-documented APIs and comprehensive SDKs</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Reduced maintenance burden with managed PCI compliance and automatic updates</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Superior developer experience with testing tools and technical support</span>
+          </div>
+        </div>
+        
+        <div class="stakeholder">
+          <div class="stakeholder-title">
+            <div class="stakeholder-icon" style="background-color: #6772E5;">
+              <i class="fas fa-user-friends fa-lg"></i>
+            </div>
+            Product and UX
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Seamless checkout experience with one-click payments and mobile optimization</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Diverse payment options including cards, digital wallets, and local methods</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="benefit-text">Reliable platform with 99.99% uptime and global redundancy</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <img src="presentation_images/stakeholder_benefits_updated.png" alt="Stakeholder Benefits Diagram" class="benefits-image">
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="parallel_implementation.html" class="nav-button prev">Previous</a>
+      <a href="international_expansion.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

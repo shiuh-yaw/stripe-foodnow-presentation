@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stripe for FoodNow Presentation</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      background: #F6F9FC;
+    }
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      flex: 1;
+    }
+    .slide.active {
+      display: flex;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(10px, 2vw, 15px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+      position: relative;
+      padding-bottom: clamp(5px, 1vw, 10px);
+    }
+    .title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: clamp(50px, 10vw, 80px);
+      height: clamp(2px, 0.5vw, 4px);
+      background: linear-gradient(90deg, #6772E5, #FF5722);
+      border-radius: 2px;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .right-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      padding: clamp(15px, 3vw, 25px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .value-prop {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(10px, 2vw, 18px);
+      position: relative;
+      padding-left: clamp(5px, 1vw, 10px);
+    }
+    .value-prop:last-child {
+      margin-bottom: 0;
+    }
+    .icon {
+      width: clamp(35px, 6vw, 50px);
+      height: clamp(35px, 6vw, 50px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 15px);
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(103, 114, 229, 0.3);
+    }
+    .value-text {
+      font-size: clamp(16px, 3.5vw, 20px);
+      font-weight: 600;
+      color: #333;
+      margin-bottom: clamp(2px, 0.5vw, 4px);
+    }
+    .value-description {
+      font-size: clamp(12px, 2.5vw, 15px);
+      color: #555;
+      line-height: 1.4;
+    }
+    .quote {
+      background-color: #FFFFFF;
+      border-left: 4px solid #FF5722;
+      padding: clamp(10px, 2vw, 15px);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      position: relative;
+      margin-bottom: clamp(10px, 2vw, 15px);
+    }
+    .quote:before {
+      content: '"';
+      position: absolute;
+      top: clamp(2px, 0.5vw, 5px);
+      left: clamp(5px, 1vw, 10px);
+      font-size: clamp(30px, 6vw, 50px);
+      color: rgba(255, 87, 34, 0.1);
+      font-family: Georgia, serif;
+      line-height: 0.8;
+    }
+    .quote-text {
+      font-style: italic;
+      font-size: clamp(12px, 2.5vw, 15px);
+      color: #555555;
+      padding-left: clamp(10px, 2vw, 20px);
+      line-height: 1.5;
+    }
+    .quote-author {
+      font-weight: 600;
+      margin-top: clamp(4px, 1vw, 8px);
+      font-size: clamp(10px, 2vw, 13px);
+      color: #333333;
+      text-align: right;
+    }
+    .value-metrics {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: clamp(5px, 1vw, 10px);
+      margin-bottom: clamp(10px, 2vw, 20px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .metric {
+      text-align: center;
+      background: white;
+      padding: clamp(8px, 1.5vw, 12px);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex: 1;
+      margin: 0 clamp(4px, 0.8vw, 8px);
+      position: relative;
+      overflow: hidden;
+      min-width: 120px;
+    }
+    .metric:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: clamp(2px, 0.5vw, 4px);
+      background: linear-gradient(90deg, #6772E5, #FF5722);
+    }
+    .metric-value {
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 700;
+      color: #6772E5;
+      margin-bottom: clamp(1px, 0.2vw, 3px);
+    }
+    .metric-label {
+      font-size: clamp(10px, 2vw, 13px);
+      color: #666;
+      font-weight: 500;
+    }
+    .highlight {
+      color: #FF5722;
+      font-weight: 600;
+    }
+    .chart-container {
+      height: clamp(150px, 30vw, 200px);
+      margin-bottom: clamp(10px, 2vw, 15px);
+      background: white;
+      border-radius: 12px;
+      padding: clamp(10px, 2vw, 15px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(5px, 1vw, 10px);
+    }
+    .feature-item {
+      background: white;
+      border-radius: 8px;
+      padding: clamp(8px, 1.5vw, 10px);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .feature-icon {
+      width: clamp(24px, 4vw, 32px);
+      height: clamp(24px, 4vw, 32px);
+      background-color: rgba(103, 114, 229, 0.1);
+      color: #6772E5;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(5px, 1vw, 10px);
+      flex-shrink: 0;
+    }
+    .feature-text {
+      font-size: clamp(10px, 2vw, 13px);
+      font-weight: 500;
+    }
+    .navigation-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-column {
+        padding: 20px;
+      }
+      .value-metrics {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .metric {
+        margin: 0;
+        min-width: unset;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .title {
+        text-align: center;
+      }
+      .title:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .navigation-buttons {
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-presentation-container">
+    <!-- Slide 1: Title Slide -->
+    <div id="slide-title_slide" class="slide active">
+      <div class="slide-container" style="background: #FFFFFF; justify-content: center; align-items: center;">
+        <h1 class="title" style="font-size: clamp(36px, 8vw, 72px); margin-bottom: clamp(20px, 4vw, 30px); text-align: center; background: linear-gradient(90deg, #6772E5, #FF5722); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2;">Stripe for FoodNow</h1>
+        <h2 class="subtitle" style="font-size: clamp(20px, 4vw, 36px); margin-bottom: clamp(40px, 8vw, 60px); text-align: center; color: #333333;">Comprehensive Payment Solutions</h2>
+        <div class="logo-container" style="display: flex; justify-content: center; align-items: center; margin: clamp(20px, 4vw, 40px) 0; width: 100%; flex-wrap: wrap; gap: clamp(10px, 2vw, 20px);">
+          <img src="./presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo" style="height: clamp(60px, 10vw, 120px); max-width: 45%;">
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo" style="height: clamp(60px, 10vw, 120px); max-width: 45%;">
+        </div>
+        <p class="presenter" style="font-size: clamp(16px, 3vw, 24px); margin-top: clamp(20px, 4vw, 40px); text-align: center;">Presented by: Shiuh Yaw Phang</p>
+      </div>
+    </div>
+
+    <!-- Slide 2: FoodNow Challenges -->
+    <div id="slide-foodnow_challenges" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Understanding FoodNow's Challenges</h1>
+          <img src="./presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo">
+        </div>
+        <div class="content">
+          <div class="left-column">
+            <div class="challenge">
+              <div class="icon" style="background-color: #6772E5;">
+                <i class="fas fa-globe fa-lg"></i>
+              </div>
+              <div>
+                <div class="challenge-text">Expand to 5 new markets</div>
+                <div class="challenge-description">Need for localized payment methods and multi-currency support</div>
+              </div>
+            </div>
+            <div class="challenge">
+              <div class="icon" style="background-color: #6772E5;">
+                <i class="fas fa-chart-line fa-lg"></i>
+              </div>
+              <div>
+                <div class="challenge-text">Improve payment acceptance rates</div>
+                <div class="challenge-description">Reduce failed transactions and combat increasing fraud</div>
+              </div>
+            </div>
+            <div class="challenge">
+              <div class="icon" style="background-color: #6772E5;">
+                <i class="fas fa-user-plus fa-lg"></i>
+              </div>
+              <div>
+                <div class="challenge-text">Streamline partner onboarding</div>
+                <div class="challenge-description">Simplify process for restaurants and delivery partners</div>
+              </div>
+            </div>
+            <div class="challenge">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-sync fa-lg"></i>
+              </div>
+              <div>
+                <div class="challenge-text">Explore subscription offerings</div>
+                <div class="challenge-description">Develop new revenue streams for sustained growth</div>
+              </div>
+            </div>
+            <div class="challenge">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-trophy fa-lg"></i>
+              </div>
+              <div>
+                <div class="challenge-text">Stay ahead of competition</div>
+                <div class="challenge-description">Enhance user experience and operational efficiency</div>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <img src="./presentation_images/food_delivery_app.jpeg" alt="Food Delivery App Interface" class="challenges-image" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Stripe's Value Proposition -->
+    <div id="slide-stripe_value_proposition" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Stripe's Value Proposition</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="value-metrics">
+          <div class="metric">
+            <div class="metric-value">135+</div>
+            <div class="metric-label">Currencies</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">40+</div>
+            <div class="metric-label">Countries</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">99.99%</div>
+            <div class="metric-label">Uptime</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">3.5%</div>
+            <div class="metric-label">Avg. Revenue Lift</div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="left-column">
+            <div class="quote">
+              <p class="quote-text">"Stripe is more than a payment processor—it's a complete financial infrastructure platform that helps businesses accept payments, send payouts, and manage their businesses online."</p>
+              <p class="quote-author">— Stripe Mission Statement</p>
+            </div>
+            <div class="chart-container">
+              <canvas id="paymentMethodsChart"></canvas>
+            </div>
+            <div class="feature-grid">
+              <div class="feature-item">
+                <div class="feature-icon">
+                  <i class="fas fa-bolt fa-sm"></i>
+                </div>
+                <div class="feature-text">Instant payouts</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">
+                  <i class="fas fa-mobile-alt fa-sm"></i>
+                </div>
+                <div class="feature-text">Mobile-optimized</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">
+                  <i class="fas fa-chart-line fa-sm"></i>
+                </div>
+                <div class="feature-text">Real-time reporting</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">
+                  <i class="fas fa-code fa-sm"></i>
+                </div>
+                <div class="feature-text">Developer-friendly</div>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-globe fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Global Reach & Scalability</div>
+                <div class="value-description">Support for <span class="highlight">135+ currencies</span> and local payment methods in <span class="highlight">40+ countries</span>, enabling seamless international expansion</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-shield-alt fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Optimized Payments & Fraud Prevention</div>
+                <div class="value-description">Radar's machine learning for fraud detection, Smart Retries, and Adaptive Acceptance to improve authorization rates</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-user-plus fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Streamlined Onboarding & Payouts</div>
+                <div class="value-description">Connect platform for easy onboarding of restaurants and drivers, and instant payouts to improve cash flow</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-file-invoice-dollar fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Flexible Billing & Subscription Management</div>
+                <div class="value-description">Billing and Invoicing APIs to manage recurring payments and subscription models for FoodNow's premium services</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Solution Architecture -->
+    <div id="slide-solution_architecture" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Solution Architecture</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content" style="justify-content: center; align-items: center;">
+          <img src="./presentation_images/architecture_diagram.png" alt="Solution Architecture Diagram" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Integration Process & Timeline -->
+    <div id="slide-integration_timeline" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Integration Process & Timeline</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content" style="justify-content: center; align-items: center;">
+          <img src="./presentation_images/integration_timeline.png" alt="Integration Timeline" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Optimized Timeline -->
+    <div id="slide-optimized_timeline" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Optimized Timeline</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content" style="justify-content: center; align-items: center;">
+          <img src="./presentation_images/optimized_timeline.png" alt="Optimized Timeline" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Parallel Implementation Strategies -->
+    <div id="slide-parallel_implementation" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Parallel Implementation Strategies</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content">
+          <div class="left-column">
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-code-branch fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Dedicated Workstreams</div>
+                <div class="value-description">Establish independent teams for core payment integration, partner onboarding, and subscription development.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-handshake fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">API-First Approach</div>
+                <div class="value-description">Define clear API contracts early to enable parallel development and reduce inter-team dependencies.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-vial fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Mock Services & Sandbox Environments</div>
+                <div class="value-description">Utilize mock APIs and Stripe's sandbox for independent testing and development before full integration.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-sync-alt fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Continuous Integration & Testing</div>
+                <div class="value-description">Implement frequent integration testing across all workstreams to identify and resolve conflicts early.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-flag fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Feature Flags & Phased Rollouts</div>
+                <div class="value-description">Use feature flags to deploy new functionalities independently and enable phased rollouts to minimize risk.</div>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <img src="./presentation_images/team_collaboration.jpeg" alt="Team Collaboration" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Benefits for Key Stakeholders -->
+    <div id="slide-stakeholder_benefits" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Benefits for Key Stakeholders</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content" style="flex-direction: column; justify-content: center; align-items: center;">
+          <div class="text-content" style="text-align: center; margin-bottom: 20px;">
+            <p style="font-size: clamp(16px, 3vw, 20px); color: #555;">Stripe's comprehensive platform delivers tailored benefits across FoodNow's key teams:</p>
+          </div>
+          <img src="./presentation_images/stakeholder_benefits_updated.png" alt="Stakeholder Benefits Diagram" style="max-width: 90%; height: auto; object-fit: contain;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Supporting International Expansion -->
+    <div id="slide-international_expansion" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Supporting International Expansion</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content">
+          <div class="left-column">
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-money-bill-wave fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Local Payment Methods</div>
+                <div class="value-description">Access to a wide range of local payment methods (e.g., Alipay, WeChat Pay, GrabPay) crucial for APAC markets.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-coins fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Multi-Currency Support</div>
+                <div class="value-description">Process transactions in <span class="highlight">135+ currencies</span>, allowing FoodNow to expand globally without currency conversion complexities.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-globe-asia fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Global Payouts & Treasury</div>
+                <div class="value-description">Efficiently manage payouts to restaurants and drivers across different countries and currencies.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-balance-scale-left fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Regulatory Compliance</div>
+                <div class="value-description">Stripe handles complex local regulations and compliance requirements, reducing FoodNow's operational burden.</div>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <img src="./presentation_images/international_expansion_updated.png" alt="International Expansion Diagram" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 10: Innovation Opportunities -->
+    <div id="slide-innovation_opportunities" class="slide">
+      <div class="slide-container">
+        <div class="header">
+          <h1 class="title">Innovation Opportunities</h1>
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+        </div>
+        <div class="content">
+          <div class="left-column">
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-credit-card fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Stripe Issuing</div>
+                <div class="value-description">Issue virtual or physical cards to drivers for fuel, maintenance, or other operational expenses, with real-time controls.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon">
+                <i class="fas fa-chart-pie fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Stripe Sigma</div>
+                <div class="value-description">Advanced analytics and custom reporting to gain deeper insights into payment data, customer behavior, and business performance.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-robot fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Machine Learning for Optimization</div>
+                <div class="value-description">Leverage Stripe's ML capabilities for dynamic pricing, personalized offers, and improved conversion rates.</div>
+              </div>
+            </div>
+            <div class="value-prop">
+              <div class="icon" style="background-color: #FF5722;">
+                <i class="fas fa-lightbulb fa-lg"></i>
+              </div>
+              <div>
+                <div class="value-text">Future-Proofing with New Products</div>
+                <div class="value-description">Stripe's continuous innovation ensures FoodNow can easily adopt new payment technologies and features as they emerge.</div>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <img src="./presentation_images/innovation_opportunities.png" alt="Innovation Opportunities" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 11: Conclusion -->
+    <div id="slide-conclusion" class="slide">
+      <div class="slide-container" style="background: #FFFFFF; justify-content: center; align-items: center;">
+        <h1 class="title" style="font-size: clamp(36px, 8vw, 72px); margin-bottom: clamp(20px, 4vw, 30px); text-align: center; background: linear-gradient(90deg, #6772E5, #FF5722); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2;">Conclusion</h1>
+        <p style="font-size: clamp(20px, 4vw, 36px); margin-bottom: clamp(40px, 8vw, 60px); text-align: center; color: #333333;">Stripe is not just a vendor; we are a partner in your growth. Let's build the future of food delivery together.</p>
+        <div class="logo-container" style="display: flex; justify-content: center; align-items: center; margin: clamp(20px, 4vw, 40px) 0; width: 100%; flex-wrap: wrap; gap: clamp(10px, 2vw, 20px);">
+          <img src="./presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo" style="height: clamp(60px, 10vw, 120px); max-width: 45%;">
+          <img src="./presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo" style="height: clamp(60px, 10vw, 120px); max-width: 45%;">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="navigation-buttons">
+    <button class="nav-button prev" onclick="showSlide(currentSlide - 1)">Previous</button>
+    <button class="nav-button next" onclick="showSlide(currentSlide + 1)">Next</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      updateNavigationButtons();
+    }
+
+    function updateNavigationButtons() {
+      // No specific updates needed for always-visible buttons
+    }
+
+    // Initial load
+    window.addEventListener('load', () => {
+      showSlide(0);
+    });
+
+    // Chart rendering for Stripe's Value Proposition slide
+    window.addEventListener('load', () => {
+      const ctx = document.getElementById('paymentMethodsChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Cards', 'Wallets', 'Bank Debits', 'Bank Redirects', 'Buy Now Pay Later'],
+            datasets: [{
+              label: 'Supported Payment Methods',
+              data: [80, 60, 40, 30, 20],
+              backgroundColor: [
+                '#6772E5',
+                '#FF5722',
+                '#6772E5',
+                '#FF5722',
+                '#6772E5'
+              ],
+              borderColor: [
+                '#6772E5',
+                '#FF5722',
+                '#6772E5',
+                '#FF5722',
+                '#6772E5'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              },
+              title: {
+                display: true,
+                text: 'Global Payment Method Coverage',
+                font: {
+                  size: 16,
+                  weight: 'bold'
+                },
+                color: '#333'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  display: false
+                },
+                grid: {
+                  display: false
+                }
+              },
+              x: {
+                grid: {
+                  display: false
+                }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

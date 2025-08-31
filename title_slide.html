@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #FFFFFF;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px);
+      margin: 0 auto;
+    }
+    .title {
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: bold;
+      margin-bottom: clamp(20px, 4vw, 30px);
+      text-align: center;
+      background: linear-gradient(90deg, #6772E5, #FF5722);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+    .subtitle {
+      font-size: clamp(20px, 4vw, 36px);
+      margin-bottom: clamp(40px, 8vw, 60px);
+      text-align: center;
+      color: #333333;
+    }
+    .presenter {
+      font-size: clamp(16px, 3vw, 24px);
+      margin-top: clamp(20px, 4vw, 40px);
+      text-align: center;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: clamp(20px, 4vw, 40px) 0;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: clamp(10px, 2vw, 20px);
+    }
+    .logo {
+      height: clamp(60px, 10vw, 120px);
+      max-width: 45%; /* Adjusted for better mobile scaling */
+    }
+    .date {
+      font-size: clamp(16px, 3vw, 24px);
+      margin-top: clamp(30px, 6vw, 60px);
+      color: #666666;
+    }
+    
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .logo-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .title {
+        margin-bottom: 20px;
+      }
+      .subtitle {
+        margin-bottom: 40px;
+      }
+      .logo {
+        max-width: 60%; /* Further adjustment for very small screens */
+      }
+       }
+    }
+
+  </style>e>
+</head>
+<body>
+  <div class="slide-container">
+    <h1 class="title">Stripe for FoodNow</h1>
+    <h2 class="subtitle">Comprehensive Payment Solutions</h2>
+    
+    <div class="logo-container">
+      <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo">
+      <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+    </div>
+    
+    <p class="presenter">Presented by: Shiuh Yaw Phang</p>
+    <div class="navigation-buttons">
+      <a href="conclusion.html" class="nav-button prev">Previous</a>
+      <a href="foodnow_challenges.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

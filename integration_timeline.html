@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(15px, 3vw, 20px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .timeline-image {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .key-points {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: clamp(20px, 4vw, 30px);
+      flex-wrap: wrap;
+      gap: clamp(10px, 2vw, 20px);
+    }
+    .point {
+      flex: 1;
+      min-width: 200px;
+      background-color: #FFFFFF;
+      border-radius: 8px;
+      padding: clamp(10px, 2vw, 15px);
+      margin: 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .point-icon {
+      width: clamp(40px, 7vw, 50px);
+      height: clamp(40px, 7vw, 50px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: clamp(5px, 1vw, 10px);
+    }
+    .point:nth-child(even) .point-icon {
+      background-color: #FF5722;
+    }
+    .point-title {
+      font-size: clamp(16px, 3vw, 18px);
+      font-weight: 600;
+      margin-bottom: clamp(2px, 0.5vw, 5px);
+    }
+    .point-description {
+      font-size: clamp(12px, 2.5vw, 14px);
+      color: #666666;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .key-points {
+        flex-direction: column;
+      }
+      .point {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Integration Process & Timeline</h1>
+      <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <img src="presentation_images/integration_timeline.png" alt="Integration Timeline" class="timeline-image">
+      
+      <div class="key-points">
+        <div class="point">
+          <div class="point-icon">
+            <i class="fas fa-rocket fa-lg"></i>
+          </div>
+          <div class="point-title">Phased Approach</div>
+          <div class="point-description">Modular implementation to accelerate time-to-market</div>
+        </div>
+        
+        <div class="point">
+          <div class="point-icon">
+            <i class="fas fa-code fa-lg"></i>
+          </div>
+          <div class="point-title">Developer-First</div>
+          <div class="point-description">Well-documented APIs and SDKs for seamless integration</div>
+        </div>
+        
+        <div class="point">
+          <div class="point-icon">
+            <i class="fas fa-users fa-lg"></i>
+          </div>
+          <div class="point-title">Dedicated Support</div>
+          <div class="point-description">Implementation specialists throughout the process</div>
+        </div>
+        
+        <div class="point">
+          <div class="point-icon">
+            <i class="fas fa-chart-line fa-lg"></i>
+          </div>
+          <div class="point-title">Continuous Optimization</div>
+          <div class="point-description">Data-driven improvements to payment flows</div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="solution_architecture.html" class="nav-button prev">Previous</a>
+      <a href="optimized_timeline.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

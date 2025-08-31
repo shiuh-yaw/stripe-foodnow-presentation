@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      max-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(10px, 2vw, 15px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+      position: relative;
+      padding-bottom: clamp(5px, 1vw, 10px);
+    }
+    .title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: clamp(50px, 10vw, 80px);
+      height: clamp(2px, 0.5vw, 4px);
+      background: linear-gradient(90deg, #6772E5, #FF5722);
+      border-radius: 2px;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .right-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      padding: clamp(15px, 3vw, 25px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .value-prop {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(10px, 2vw, 18px);
+      position: relative;
+      padding-left: clamp(5px, 1vw, 10px);
+    }
+    .value-prop:last-child {
+      margin-bottom: 0;
+    }
+    .icon {
+      width: clamp(35px, 6vw, 50px);
+      height: clamp(35px, 6vw, 50px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 15px);
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(103, 114, 229, 0.3);
+    }
+    .value-text {
+      font-size: clamp(16px, 3.5vw, 20px);
+      font-weight: 600;
+      color: #333;
+      margin-bottom: clamp(2px, 0.5vw, 4px);
+    }
+    .value-description {
+      font-size: clamp(12px, 2.5vw, 15px);
+      color: #555;
+      line-height: 1.4;
+    }
+    .quote {
+      background-color: #FFFFFF;
+      border-left: 4px solid #FF5722;
+      padding: clamp(10px, 2vw, 15px);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      position: relative;
+      margin-bottom: clamp(10px, 2vw, 15px);
+    }
+    .quote:before {
+      content: '"';
+      position: absolute;
+      top: clamp(2px, 0.5vw, 5px);
+      left: clamp(5px, 1vw, 10px);
+      font-size: clamp(30px, 6vw, 50px);
+      color: rgba(255, 87, 34, 0.1);
+      font-family: Georgia, serif;
+      line-height: 0.8;
+    }
+    .quote-text {
+      font-style: italic;
+      font-size: clamp(12px, 2.5vw, 15px);
+      color: #555555;
+      padding-left: clamp(10px, 2vw, 20px);
+      line-height: 1.5;
+    }
+    .quote-author {
+      font-weight: 600;
+      margin-top: clamp(4px, 1vw, 8px);
+      font-size: clamp(10px, 2vw, 13px);
+      color: #333333;
+      text-align: right;
+    }
+    .value-metrics {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: clamp(5px, 1vw, 10px);
+      margin-bottom: clamp(10px, 2vw, 20px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .metric {
+      text-align: center;
+      background: white;
+      padding: clamp(8px, 1.5vw, 12px);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex: 1;
+      margin: 0 clamp(4px, 0.8vw, 8px);
+      position: relative;
+      overflow: hidden;
+      min-width: 120px;
+    }
+    .metric:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: clamp(2px, 0.5vw, 4px);
+      background: linear-gradient(90deg, #6772E5, #FF5722);
+    }
+    .metric-value {
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 700;
+      color: #6772E5;
+      margin-bottom: clamp(1px, 0.2vw, 3px);
+    }
+    .metric-label {
+      font-size: clamp(10px, 2vw, 13px);
+      color: #666;
+      font-weight: 500;
+    }
+    .highlight {
+      color: #FF5722;
+      font-weight: 600;
+    }
+    .chart-container {
+      height: clamp(150px, 30vw, 200px);
+      margin-bottom: clamp(10px, 2vw, 15px);
+      background: white;
+      border-radius: 12px;
+      padding: clamp(10px, 2vw, 15px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(5px, 1vw, 10px);
+    }
+    .feature-item {
+      background: white;
+      border-radius: 8px;
+      padding: clamp(8px, 1.5vw, 10px);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .feature-icon {
+      width: clamp(24px, 4vw, 32px);
+      height: clamp(24px, 4vw, 32px);
+      background-color: rgba(103, 114, 229, 0.1);
+      color: #6772E5;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(5px, 1vw, 10px);
+      flex-shrink: 0;
+    }
+    .feature-text {
+      font-size: clamp(10px, 2vw, 13px);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .right-column {
+        padding: 20px;
+      }
+      .value-metrics {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .metric {
+        margin: 0;
+        min-width: unset;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .title {
+        text-align: center;
+      }
+      .title:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Stripe's Value Proposition</h1>
+      <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+    </div>
+    
+    <div class="value-metrics">
+      <div class="metric">
+        <div class="metric-value">135+</div>
+        <div class="metric-label">Currencies</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">40+</div>
+        <div class="metric-label">Countries</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">99.99%</div>
+        <div class="metric-label">Uptime</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3.5%</div>
+        <div class="metric-label">Avg. Revenue Lift</div>
+      </div>
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <div class="quote">
+          <p class="quote-text">"Stripe is more than a payment processor—it's a complete financial infrastructure platform that helps businesses accept payments, send payouts, and manage their businesses online."</p>
+          <p class="quote-author">— Stripe Mission Statement</p>
+        </div>
+        
+        <div class="chart-container">
+          <canvas id="paymentMethodsChart"></canvas>
+        </div>
+        
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bolt fa-sm"></i>
+            </div>
+            <div class="feature-text">Instant payouts</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-mobile-alt fa-sm"></i>
+            </div>
+            <div class="feature-text">Mobile-optimized</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line fa-sm"></i>
+            </div>
+            <div class="feature-text">Real-time reporting</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-code fa-sm"></i>
+            </div>
+            <div class="feature-text">Developer-friendly</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <div class="value-prop">
+          <div class="icon">
+            <i class="fas fa-globe fa-lg"></i>
+          </div>
+          <div>
+            <div class="value-text">Global Reach & Scalability</div>
+            <div class="value-description">Support for <span class="highlight">135+ currencies</span> and local payment methods in <span class="highlight">40+ countries</span>, enabling seamless international expansion</div>
+          </div>
+        </div>
+        
+        <div class="value-prop">
+          <div class="icon">
+            <i class="fas fa-shield-alt fa-lg"></i>
+          </div>
+          <div>
+            <div class="value-text">Optimized Payments & Fraud Prevention</div>
+            <div class="value-description">Radar's machine learning for fraud detection, Smart Retries, and Adaptive Acceptance to improve authorization rates</div>
+          </div>
+        </div>
+        
+        <div class="value-prop">
+          <div class="icon" style="background-color: #FF5722;">
+            <i class="fas fa-user-plus fa-lg"></i>
+          </div>
+          <div>
+            <div class="value-text">Streamlined Onboarding & Payouts</div>
+            <div class="value-description">Connect for simplified restaurant and driver onboarding, identity verification, and automated payouts</div>
+          </div>
+        </div>
+        
+        <div class="value-prop">
+          <div class="icon" style="background-color: #FF5722;">
+            <i class="fas fa-lightbulb fa-lg"></i>
+          </div>
+          <div>
+            <div class="value-text">Innovation & New Revenue Streams</div>
+            <div class="value-description">Billing for subscriptions, Issuing for custom cards, and Terminal for in-person payments to enable new business models</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="foodnow_challenges.html" class="nav-button prev">Previous</a>
+      <a href="solution_architecture.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const ctx = document.getElementById('paymentMethodsChart').getContext('2d');
+      
+      const paymentMethodsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Credit Cards', 'Digital Wallets', 'Bank Transfers', 'BNPL', 'Local Methods'],
+          datasets: [{
+            label: 'Payment Methods Supported',
+            data: [100, 85, 70, 60, 90],
+            backgroundColor: [
+              '#6772E5',
+              '#57A9FB',
+              '#37D4CF',
+              '#FF5722',
+              '#A9AEB8'
+            ],
+            borderRadius: 6,
+            maxBarThickness: 35
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: true,
+              text: 'Stripe Payment Method Coverage (%)',
+              font: {
+                size: 14
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                display: false
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

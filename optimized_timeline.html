@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(10px, 2vw, 15px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .timeline-image {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto clamp(10px, 2vw, 15px);
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .comparison {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: clamp(10px, 2vw, 10px);
+      flex-wrap: wrap;
+      gap: clamp(10px, 2vw, 20px);
+    }
+    .comparison-column {
+      flex: 1;
+      min-width: 280px;
+      padding: clamp(10px, 2vw, 15px);
+      border-radius: 8px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sequential {
+      background-color: #FFFFFF;
+      border-left: 4px solid #FF5722;
+    }
+    .parallel {
+      background-color: #FFFFFF;
+      border-left: 4px solid #6772E5;
+    }
+    .comparison-title {
+      font-size: clamp(16px, 3vw, 18px);
+      font-weight: 600;
+      margin-bottom: clamp(5px, 1vw, 10px);
+      display: flex;
+      align-items: center;
+    }
+    .comparison-icon {
+      width: clamp(24px, 4vw, 28px);
+      height: clamp(24px, 4vw, 28px);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(5px, 1vw, 10px);
+      flex-shrink: 0;
+    }
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(4px, 0.8vw, 8px);
+    }
+    .check-icon {
+      margin-right: clamp(4px, 0.8vw, 8px);
+      margin-top: clamp(1px, 0.2vw, 3px);
+      flex-shrink: 0;
+    }
+    .benefit-text {
+      font-size: clamp(12px, 2.5vw, 15px);
+    }
+    .highlight {
+      font-weight: 600;
+      color: #6772E5;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .comparison {
+        flex-direction: column;
+      }
+      .comparison-column {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Optimized Integration Timeline</h1>
+      <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <img src="presentation_images/optimized_timeline.png" alt="Optimized Integration Timeline" class="timeline-image">
+      
+      <div class="comparison">
+        <div class="comparison-column sequential">
+          <div class="comparison-title">
+            <div class="comparison-icon" style="background-color: #FF5722; color: white;">
+              <i class="fas fa-arrow-right fa-sm"></i>
+            </div>
+            Sequential Approach
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-clock check-icon" style="color: #FF5722;"></i>
+            <span class="benefit-text">18 weeks implementation time</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-exclamation-triangle check-icon" style="color: #FF5722;"></i>
+            <span class="benefit-text">Dependencies create bottlenecks</span>
+          </div>
+        </div>
+        
+        <div class="comparison-column parallel">
+          <div class="comparison-title">
+            <div class="comparison-icon" style="background-color: #6772E5; color: white;">
+              <i class="fas fa-random fa-sm"></i>
+            </div>
+            Parallel Approach
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-clock check-icon"></i>
+            <span class="benefit-text"><span class="highlight">12 weeks</span> (33% faster)</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-rocket check-icon"></i>
+            <span class="benefit-text">Earlier value realization</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="integration_timeline.html" class="nav-button prev">Previous</a>
+      <a href="parallel_implementation.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

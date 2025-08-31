@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(15px, 3vw, 20px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1;
+      padding-right: clamp(10px, 2vw, 20px);
+    }
+    .right-column {
+      flex: 1;
+    }
+    .strategy-title {
+      font-size: clamp(18px, 3.5vw, 20px);
+      font-weight: 600;
+      color: #6772E5;
+      margin-bottom: clamp(10px, 2vw, 15px);
+      display: flex;
+      align-items: center;
+    }
+    .strategy-icon {
+      width: clamp(30px, 5vw, 36px);
+      height: clamp(30px, 5vw, 36px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 15px);
+      flex-shrink: 0;
+    }
+    .strategy-list {
+      margin-bottom: clamp(15px, 3vw, 25px);
+    }
+    .strategy-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(5px, 1vw, 10px);
+    }
+    .check-icon {
+      color: #6772E5;
+      margin-right: clamp(5px, 1vw, 10px);
+      margin-top: clamp(2px, 0.5vw, 4px);
+      flex-shrink: 0;
+    }
+    .strategy-text {
+      font-size: clamp(14px, 2.5vw, 16px);
+    }
+    .chart-container {
+      height: clamp(200px, 35vw, 300px);
+      background-color: white;
+      border-radius: 8px;
+      padding: clamp(10px, 2vw, 15px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: clamp(10px, 2vw, 20px);
+    }
+    .benefit-box {
+      background-color: white;
+      border-radius: 8px;
+      padding: clamp(10px, 2vw, 15px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: clamp(10px, 2vw, 15px);
+      border-left: 4px solid #FF5722;
+    }
+    .benefit-title {
+      font-size: clamp(16px, 3vw, 18px);
+      font-weight: 600;
+      color: #FF5722;
+      margin-bottom: clamp(5px, 1vw, 10px);
+    }
+    .benefit-text {
+      font-size: clamp(13px, 2.2vw, 15px);
+      color: #555555;
+    }
+    .highlight {
+      font-weight: 600;
+      color: #6772E5;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Parallel Implementation Strategies</h1>
+      <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <div class="strategy-title">
+          <div class="strategy-icon">
+            <i class="fas fa-code-branch fa-lg"></i>
+          </div>
+          Workstream Organization
+        </div>
+        <div class="strategy-list">
+          <div class="strategy-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="strategy-text">Create dedicated teams for each parallel stream</span>
+          </div>
+          <div class="strategy-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="strategy-text">Define clear API contracts and interfaces early</span>
+          </div>
+          <div class="strategy-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="strategy-text">Implement mock services to enable independent development</span>
+          </div>
+        </div>
+        
+        <div class="strategy-title">
+          <div class="strategy-icon" style="background-color: #FF5722;">
+            <i class="fas fa-shield-alt fa-lg"></i>
+          </div>
+          Risk Mitigation
+        </div>
+        <div class="strategy-list">
+          <div class="strategy-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="strategy-text">Schedule weekly integration testing across workstreams</span>
+          </div>
+          <div class="strategy-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="strategy-text">Implement continuous testing with automated pipelines</span>
+          </div>
+          <div class="strategy-item">
+            <i class="fas fa-check check-icon"></i>
+            <span class="strategy-text">Create feature flags for independent deployment</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <img src="presentation_images/team_collaboration.jpeg" alt="Team Collaboration" class="w-full h-auto rounded-lg shadow-md mb-4">
+        <div class="chart-container">
+          <canvas id="timelineChart"></canvas>
+        </div>
+        
+        <div class="benefit-box">
+          <div class="benefit-title">Business Impact</div>
+          <div class="benefit-text">
+            Accelerated implementation enables FoodNow to enter new markets <span class="highlight">6 weeks earlier</span>, gaining competitive advantage and earlier revenue realization.
+          </div>
+        </div>
+        
+        <div class="benefit-box">
+          <div class="benefit-title">Partner Experience</div>
+          <div class="benefit-text">
+            Early partner onboarding allows restaurants and drivers to begin integration testing while core systems are being finalized.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="optimized_timeline.html" class="nav-button prev">Previous</a>
+      <a href="stakeholder_benefits.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const ctx = document.getElementById("timelineChart").getContext("2d");
+      
+      const timelineChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Sequential", "Parallel"],
+          datasets: [
+            {
+              label: "Core Payments",
+              data: [5, 5],
+              backgroundColor: "#6772E5",
+              barPercentage: 0.7,
+            },
+            {
+              label: "Partner Onboarding",
+              data: [7, 5],
+              backgroundColor: "#57A9FB",
+              barPercentage: 0.7,
+            },
+            {
+              label: "Advanced Features",
+              data: [6, 4],
+              backgroundColor: "#FF5722",
+              barPercentage: 0.7,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Implementation Time by Phase (Weeks)",
+              font: {
+                size: 16
+              }
+            },
+            legend: {
+              position: "bottom"
+            },
+            tooltip: {
+              mode: "index",
+              intersect: false
+            }
+          },
+          scales: {
+            x: {
+              stacked: true,
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              max: 20,
+              ticks: {
+                stepSize: 5
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

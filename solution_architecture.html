@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(20px, 4vw, 30px);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .architecture-image {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto clamp(15px, 3vw, 30px);
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .key-components {
+      display: flex;
+      justify-content: space-between;
+      margin-top: clamp(10px, 2vw, 20px);
+      flex-wrap: wrap;
+      gap: clamp(10px, 2vw, 20px);
+    }
+    .component {
+      flex: 1;
+      min-width: 280px;
+      margin: 0;
+      padding: clamp(15px, 3vw, 20px);
+      border-radius: 8px;
+    }
+    .component-title {
+      font-size: clamp(18px, 3.5vw, 20px);
+      font-weight: 600;
+      margin-bottom: clamp(5px, 1vw, 10px);
+      display: flex;
+      align-items: center;
+    }
+    .component-icon {
+      width: clamp(30px, 5vw, 36px);
+      height: clamp(30px, 5vw, 36px);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(5px, 1vw, 10px);
+      flex-shrink: 0;
+    }
+    .component-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .component-list li {
+      margin-bottom: clamp(4px, 0.8vw, 8px);
+      font-size: clamp(14px, 2.5vw, 16px);
+      display: flex;
+      align-items: center;
+    }
+    .component-list li:before {
+      content: "•";
+      color: #6772E5;
+      font-weight: bold;
+      margin-right: clamp(5px, 1vw, 10px);
+    }
+    .foodnow {
+      background-color: #f0f0f0;
+    }
+    .stripe {
+      background-color: #e6e9f5;
+    }
+    .integration {
+      background-color: #fff0eb;
+    }
+
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .key-components {
+        flex-direction: column;
+      }
+      .component {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Proposed Solution Architecture</h1>
+      <div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 15px;">
+        <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo" style="margin-right: 0;">
+        <img src="presentation_images/stripe_logo.png" alt="Stripe Logo" class="logo">
+      </div>
+    </div>
+    
+    <div class="content">
+      <img src="presentation_images/architecture_diagram.png" alt="FoodNow-Stripe Architecture Diagram" class="architecture-image">
+      
+      <div class="key-components">
+        <div class="component foodnow">
+          <div class="component-title">
+            <div class="component-icon" style="background-color: #FF5722; color: white;">
+              <i class="fas fa-utensils"></i>
+            </div>
+            FoodNow Platform
+          </div>
+          <ul class="component-list">
+            <li>Order Management System</li>
+            <li>User Management</li>
+            <li>Partner Management</li>
+            <li>Payment Processing</li>
+            <li>Subscription Service</li>
+          </ul>
+        </div>
+        
+        <div class="component stripe">
+          <div class="component-title">
+            <div class="component-icon" style="background-color: #6772E5; color: white;">
+              <i class="fas fa-credit-card"></i>
+            </div>
+            Stripe Services
+          </div>
+          <ul class="component-list">
+            <li>Payment Intents & Checkout APIs</li>
+            <li>Connect API for partners</li>
+            <li>Billing API for subscriptions</li>
+            <li>Radar for fraud prevention</li>
+            <li>Issuing API for custom cards</li>
+          </ul>
+        </div>
+        
+        <div class="component integration">
+          <div class="component-title">
+            <div class="component-icon" style="background-color: #FF5722; color: white;">
+              <i class="fas fa-code"></i>
+            </div>
+            Integration Approach
+          </div>
+          <ul class="component-list">
+            <li>API-first architecture</li>
+            <li>Webhook-driven events</li>
+            <li>Secure authentication</li>
+            <li>Comprehensive logging</li>
+            <li>Phased implementation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="stripe_value_proposition.html" class="nav-button prev">Previous</a>
+      <a href="integration_timeline.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+

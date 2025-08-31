@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <style>
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      background: #F6F9FC;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 40px);
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(20px, 4vw, 30px);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .title {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: bold;
+      color: #6772E5;
+    }
+    .logo {
+      height: clamp(30px, 5vw, 40px);
+    }
+    .content {
+      display: flex;
+      flex: 1;
+      gap: clamp(15px, 3vw, 30px);
+    }
+    .left-column {
+      flex: 1;
+      padding-right: clamp(10px, 2vw, 30px);
+    }
+    .right-column {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .challenge {
+      margin-bottom: clamp(20px, 4vw, 30px);
+      display: flex;
+      align-items: flex-start;
+    }
+    .icon {
+      width: clamp(35px, 6vw, 50px);
+      height: clamp(35px, 6vw, 50px);
+      background-color: #6772E5;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: clamp(10px, 2vw, 20px);
+      flex-shrink: 0;
+    }
+    .challenge-text {
+      font-size: clamp(18px, 3.5vw, 20px);
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .challenge-description {
+      font-size: clamp(14px, 2.5vw, 16px);
+      color: #666666;
+      line-height: 1.5;
+    }
+    .challenges-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .slide-container {
+        min-height: 100vh;
+        padding: 20px 15px;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-column {
+        padding-right: 0;
+        margin-bottom: 20px;
+      }
+      .header {
+        justify-content: center;
+        text-align: center;
+      }
+      .challenge {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      .icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      .challenge-text {
+        font-size: clamp(16px, 4vw, 18px);
+      }
+      .challenge-description {
+        font-size: clamp(12px, 3vw, 14px);
+      }
+    }
+    .navigation-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      padding: 10px 20px;
+      background-color: #6772E5;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav-button.prev {
+      background-color: #A9AEB8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">Understanding FoodNow's Challenges</h1>
+      <img src="presentation_images/foodnow_logo.png" alt="FoodNow Logo" class="logo">
+    </div>
+    
+    <div class="content">
+      <div class="left-column">
+        <div class="challenge">
+          <div class="icon">
+            <i class="fas fa-globe fa-lg"></i>
+          </div>
+          <div>
+            <div class="challenge-text">Expand to 5 new markets</div>
+            <div class="challenge-description">Need for localized payment methods and multi-currency support</div>
+          </div>
+        </div>
+        
+        <div class="challenge">
+          <div class="icon">
+            <i class="fas fa-chart-line fa-lg"></i>
+          </div>
+          <div>
+            <div class="challenge-text">Improve payment acceptance rates</div>
+            <div class="challenge-description">Reduce failed transactions and combat increasing fraud</div>
+          </div>
+        </div>
+        
+        <div class="challenge">
+          <div class="icon">
+            <i class="fas fa-user-plus fa-lg"></i>
+          </div>
+          <div>
+            <div class="challenge-text">Streamline partner onboarding</div>
+            <div class="challenge-description">Simplify process for restaurants and delivery partners</div>
+          </div>
+        </div>
+        
+        <div class="challenge">
+          <div class="icon" style="background-color: #FF5722;">
+            <i class="fas fa-sync fa-lg"></i>
+          </div>
+          <div>
+            <div class="challenge-text">Explore subscription offerings</div>
+            <div class="challenge-description">Develop new revenue streams for sustained growth</div>
+          </div>
+        </div>
+        
+        <div class="challenge">
+          <div class="icon" style="background-color: #FF5722;">
+            <i class="fas fa-trophy fa-lg"></i>
+          </div>
+          <div>
+            <div class="challenge-text">Stay ahead of competition</div>
+            <div class="challenge-description">Enhance user experience and operational efficiency</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <img src="presentation_images/food_delivery_app.jpeg" alt="Food Delivery App Interface" class="challenges-image">
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <a href="title_slide.html" class="nav-button prev">Previous</a>
+      <a href="stripe_value_proposition.html" class="nav-button next">Next</a>
+    </div>
+  </div>
+</body>
+</html>
+
