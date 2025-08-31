@@ -8,6 +8,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  <link href="navigation.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -233,27 +234,7 @@
       font-size: clamp(10px, 2vw, 13px);
       font-weight: 500;
     }
-    .navigation-buttons {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
-      z-index: 1000;
-    }
-    .nav-button {
-      padding: 10px 20px;
-      background-color: #6772E5;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-    .nav-button.prev {
-      background-color: #A9AEB8;
-    }
+
     @media (max-width: 768px) {
       .slide-container {
         min-height: 100vh;
@@ -290,10 +271,6 @@
       }
       .feature-grid {
         grid-template-columns: 1fr;
-      }
-      .navigation-buttons {
-        bottom: 10px;
-        right: 10px;
       }
     }
   </style>
