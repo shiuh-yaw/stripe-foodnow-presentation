@@ -13,8 +13,7 @@
     .slide-container {
       width: 100%;
       max-width: 1280px;
-      min-height: 100vh;
-      height: 100vh;
+      min-height: 90vh;
       background: #F6F9FC;
       font-family: 'Inter', 'Roboto', sans-serif;
       color: #333333;
@@ -23,7 +22,7 @@
       padding: clamp(20px, 4vw, 40px);
       margin: 0 auto;
       box-sizing: border-box;
-      overflow: hidden;
+      overflow: auto;
     }
     .header {
       display: flex;
@@ -48,70 +47,100 @@
     }
     .timeline-image {
       max-width: 100%;
+      max-height: 400px;
       height: auto;
       margin: 0 auto;
       border-radius: 10px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      object-fit: contain;
     }
-    .key-points {
+
+    
+    .comparison {
       display: flex;
       justify-content: space-evenly;
-      margin-top: clamp(20px, 4vw, 30px);
+      margin-top: clamp(10px, 2vw, 10px);
       flex-wrap: wrap;
       gap: clamp(10px, 2vw, 20px);
     }
-    .point {
+    
+    .comparison-column {
       flex: 1;
-      min-width: 200px;
-      background-color: #FFFFFF;
-      border-radius: 8px;
+      min-width: 280px;
       padding: clamp(10px, 2vw, 15px);
+      border-radius: 8px;
       margin: 0;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
     }
-    .point-icon {
-      width: clamp(40px, 7vw, 50px);
-      height: clamp(40px, 7vw, 50px);
-      background-color: #6772E5;
-      color: white;
+    
+    .sequential {
+      background-color: #FFFFFF;
+      border-left: 4px solid #FF5722;
+    }
+    
+    .parallel {
+      background-color: #FFFFFF;
+      border-left: 4px solid #6772E5;
+    }
+    
+    .comparison-title {
+      font-size: clamp(16px, 3vw, 18px);
+      font-weight: 600;
+      margin-bottom: clamp(5px, 1vw, 10px);
+      display: flex;
+      align-items: center;
+    }
+    
+    .comparison-icon {
+      width: clamp(24px, 4vw, 28px);
+      height: clamp(24px, 4vw, 28px);
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: clamp(5px, 1vw, 10px);
+      margin-right: clamp(5px, 1vw, 10px);
+      flex-shrink: 0;
     }
-    .point:nth-child(even) .point-icon {
-      background-color: #FF5722;
+    
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: clamp(4px, 0.8vw, 8px);
     }
-    .point-title {
-      font-size: clamp(16px, 3vw, 18px);
+    
+    .check-icon {
+      margin-right: clamp(4px, 0.8vw, 8px);
+      margin-top: clamp(1px, 0.2vw, 3px);
+      flex-shrink: 0;
+    }
+    
+    .benefit-text {
+      font-size: clamp(12px, 2.5vw, 15px);
+    }
+    
+    .highlight {
       font-weight: 600;
-      margin-bottom: clamp(2px, 0.5vw, 5px);
-    }
-    .point-description {
-      font-size: clamp(12px, 2.5vw, 14px);
-      color: #666666;
+      color: #6772E5;
     }
 
     @media (max-width: 768px) {
       .slide-container {
-        min-height: 100vh;
-        height: 100vh;
+        min-height: 90vh;
         padding: 20px 15px;
-        overflow: hidden;
+        overflow: auto;
       }
       .header {
         justify-content: center;
         text-align: center;
       }
-      .key-points {
+      .timeline-image {
+        max-height: 250px;
+      }
+      .comparison {
         flex-direction: column;
       }
-      .point {
+      .comparison-column {
         min-width: unset;
         width: 100%;
       }
@@ -128,45 +157,47 @@
     </div>
     
     <div class="content">
-      <img src="presentation_images/integration_timeline.png" alt="Integration Timeline" class="timeline-image">
+      <img src="presentation_images/optimized_timeline.png" alt="Optimized Integration Timeline" class="timeline-image">
       
-      <div class="key-points">
-        <div class="point">
-          <div class="point-icon">
-            <i class="fas fa-rocket fa-lg"></i>
+      <div class="comparison">
+        <div class="comparison-column sequential">
+          <div class="comparison-title">
+            <div class="comparison-icon" style="background-color: #FF5722; color: white;">
+              <i class="fas fa-arrow-right fa-sm"></i>
+            </div>
+            Sequential Approach
           </div>
-          <div class="point-title">Phased Approach</div>
-          <div class="point-description">Modular implementation to accelerate time-to-market</div>
+          <div class="benefit-item">
+            <i class="fas fa-clock check-icon" style="color: #FF5722;"></i>
+            <span class="benefit-text">18 weeks implementation time</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-exclamation-triangle check-icon" style="color: #FF5722;"></i>
+            <span class="benefit-text">Dependencies create bottlenecks</span>
+          </div>
         </div>
         
-        <div class="point">
-          <div class="point-icon">
-            <i class="fas fa-code fa-lg"></i>
+        <div class="comparison-column parallel">
+          <div class="comparison-title">
+            <div class="comparison-icon" style="background-color: #6772E5; color: white;">
+              <i class="fas fa-random fa-sm"></i>
+            </div>
+            Parallel Approach
           </div>
-          <div class="point-title">Developer-First</div>
-          <div class="point-description">Well-documented APIs and SDKs for seamless integration</div>
-        </div>
-        
-        <div class="point">
-          <div class="point-icon">
-            <i class="fas fa-users fa-lg"></i>
+          <div class="benefit-item">
+            <i class="fas fa-clock check-icon"></i>
+            <span class="benefit-text"><span class="highlight">12 weeks</span> (33% faster)</span>
           </div>
-          <div class="point-title">Dedicated Support</div>
-          <div class="point-description">Implementation specialists throughout the process</div>
-        </div>
-        
-        <div class="point">
-          <div class="point-icon">
-            <i class="fas fa-chart-line fa-lg"></i>
+          <div class="benefit-item">
+            <i class="fas fa-rocket check-icon"></i>
+            <span class="benefit-text">Earlier value realization</span>
           </div>
-          <div class="point-title">Continuous Optimization</div>
-          <div class="point-description">Data-driven improvements to payment flows</div>
         </div>
       </div>
     </div>
     <div class="navigation-buttons" style="position: absolute; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000;">
       <a href="solution_architecture.html" class="nav-button prev" style="padding: 12px 24px; background-color: #A9AEB8; color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(169, 174, 184, 0.3); display: inline-block; text-align: center; min-width: 100px; line-height: 1.5;">Previous</a>
-      <a href="optimized_timeline.html" class="nav-button next" style="padding: 12px 24px; background-color: #6772E5; color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(103, 114, 229, 0.3); display: inline-block; text-align: center; min-width: 100px; line-height: 1.5;">Next</a>
+      <a href="parallel_implementation.html" class="nav-button next" style="padding: 12px 24px; background-color: #6772E5; color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(103, 114, 229, 0.3); display: inline-block; text-align: center; min-width: 100px; line-height: 1.5;">Next</a>
     </div>
   </div>
 
