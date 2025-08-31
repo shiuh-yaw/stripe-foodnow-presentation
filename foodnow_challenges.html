@@ -48,13 +48,7 @@
     }
     .left-column {
       flex: 1;
-      padding-right: clamp(10px, 2vw, 30px);
-    }
-    .right-column {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
     }
     .challenge {
       margin-bottom: clamp(20px, 4vw, 30px);
@@ -84,12 +78,7 @@
       color: #666666;
       line-height: 1.5;
     }
-    .challenges-image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
+
     
     @media (max-width: 768px) {
       .slide-container {
@@ -102,8 +91,7 @@
         flex-direction: column;
       }
       .left-column {
-        padding-right: 0;
-        margin-bottom: 20px;
+        width: 100%;
       }
       .header {
         justify-content: center;
@@ -187,9 +175,7 @@
         </div>
       </div>
       
-      <div class="right-column">
-        <img src="presentation_images/food_delivery_app.jpeg" alt="Food Delivery App Interface" class="challenges-image">
-      </div>
+
     </div>
     <div class="navigation-buttons" style="position: absolute; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000;">
       <a href="title_slide.html" class="nav-button prev" style="padding: 12px 24px; background-color: #A9AEB8; color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(169, 174, 184, 0.3); display: inline-block; text-align: center; min-width: 100px; line-height: 1.5;">Previous</a>
