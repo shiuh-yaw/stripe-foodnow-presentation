@@ -1,0 +1,26 @@
+gantt
+    title FoodNow-Stripe Integration Timeline
+    dateFormat  YYYY-MM-DD
+    axisFormat %b %d
+    
+    section Phase 1: Core Payments
+    Project Kickoff                   :milestone, m1, 2025-09-15, 0d
+    Technical Discovery               :a1, 2025-09-15, 10d
+    Core Payment Integration          :a2, after a1, 15d
+    Payment Testing & Optimization    :a3, after a2, 10d
+    Phase 1 Launch                    :milestone, m2, after a3, 0d
+    
+    section Phase 2: Connect & Onboarding
+    Partner Onboarding Design         :b1, after m2, 10d
+    Connect API Integration           :b2, after b1, 15d
+    Payout System Integration         :b3, after b2, 10d
+    Partner Testing & Feedback        :b4, after b3, 10d
+    Phase 2 Launch                    :milestone, m3, after b4, 0d
+    
+    section Phase 3: Advanced Features
+    Subscription System Design        :c1, after m3, 10d
+    Billing API Integration           :c2, after c1, 15d
+    Radar Fraud Prevention Setup      :c3, after c2, 10d
+    Final Testing & Optimization      :c4, after c3, 10d
+    Full Solution Launch              :milestone, m4, after c4, 0d
+

@@ -1,0 +1,43 @@
+@startuml
+!theme plain
+
+skinparam defaultFontName Noto Sans CJK JP
+skinparam defaultFontSize 16
+skinparam ArrowColor #6772E5
+skinparam ArrowFontColor #6772E5
+skinparam ParticipantBorderColor #6772E5
+skinparam ParticipantBackgroundColor #E6E9F5
+skinparam BoxBorderColor #FF5722
+skinparam BoxBackgroundColor #FFF0EB
+
+rectangle "FoodNow Platform" as FN {
+  agent "Payments Team" as PT
+  agent "Engineering" as ENG
+  agent "Product and UX" as PUX
+}
+
+rectangle "Stripe" as STRIPE {
+  component "Payment Processing" as SP
+  component "Connect" as SC
+  component "Billing" as SB
+  component "Radar" as SR
+}
+
+PT --> SP : "Automated Reconciliation"
+PT --> SR : "Fraud Reduction"
+PT --> SP : "Higher Acceptance Rates"
+
+ENG --> SP : "Simplified Integration"
+ENG --> SC : "Managed PCI Compliance"
+ENG --> SB : "Developer Experience"
+
+PUX --> SP : "Seamless Checkout"
+PUX --> SC : "Diverse Payment Options"
+PUX --> SB : "Reliable Platform"
+
+SP -[hidden]-> SC
+SC -[hidden]-> SB
+SB -[hidden]-> SR
+
+@enduml
+
